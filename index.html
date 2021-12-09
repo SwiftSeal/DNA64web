@@ -1,9 +1,198 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+	<script>
+		function encode() {
+			var encode_text = document.getElementById("encode_text").value;
+			var out_text = ""
+
+			var dict = {
+				"A": "AAA",
+				"B": "AAT",
+				"C": "AAC",
+				"D": "AAG",
+				"E": "ATA",
+				"F": "ATT",
+				"G": "ATC",
+				"H": "ATG",
+				"I": "ACA",
+				"J": "ACT",
+				"K": "ACC",
+				"L": "ACG",
+				"M": "AGA",
+				"N": "AGT",
+				"O": "AGC",
+				"P": "AGG",
+				"Q": "TAA",
+				"R": "TAT",
+				"S": "TAC",
+				"T": "TAG",
+				"U": "TTA",
+				"V": "TTT",
+				"W": "TTC",
+				"X": "TTG",
+				"Y": "TCA",
+				"Z": "TCT",
+				"a": "TCC",
+				"b": "TCG",
+				"c": "TGA",
+				"d": "TGT",
+				"e": "TGC",
+				"f": "TGG",
+				"g": "CAA",
+				"h": "CAT",
+				"i": "CAC",
+				"j": "CAG",
+				"k": "CTA",
+				"l": "CTT",
+				"m": "CTC",
+				"n": "CTG",
+				"o": "CCA",
+				"p": "CCT",
+				"q": "CCC",
+				"r": "CCG",
+				"s": "CGA",
+				"t": "CGT",
+				"u": "CGC",
+				"v": "CGG",
+				"w": "GAA",
+				"x": "GAT",
+				"y": "GAC",
+				"z": "GAG",
+				"0": "GTA",
+				"1": "GTT",
+				"2": "GTC",
+				"3": "GTG",
+				"4": "GCA",
+				"5": "GCT",
+				"6": "GCC",
+				"7": "GCG",
+				"8": "GGA",
+				"9": "GGT",
+				"+": "GGC",
+				"/": "GGG",
+				"=": ""
+			};
+			var encoded_text = btoa(encode_text)
+			for (let letter of encoded_text) {
+				out_text += dict[letter];
+			}
+			document.writeln("<h1>Confirmation Page</h1><br>");
+			document.writeln("Thank you for completing this form.<br><br>");
+			document.writeln("The text you wished to be encoded is " + encode_text + "<br>");
+			document.writeln("The result is " + btoa(encode_text) + "<br>");
+			document.writeln("DNA sequence is " + out_text + "<br>");
+		}
+		function decode() {
+			var text = document.getElementById("text_to_decode").value;
+			var output = ""
+
+			var dict = {
+				"AAA": "A",
+				"AAT": "B",
+				"AAC": "C",
+				"AAG": "D",
+				"ATA": "E",
+				"ATT": "F",
+				"ATC": "G",
+				"ATG": "H",
+				"ACA": "I",
+				"ACT": "J",
+				"ACC": "K",
+				"ACG": "L",
+				"AGA": "M",
+				"AGT": "N",
+				"AGC": "O",
+				"AGG": "P",
+				"TAA": "Q",
+				"TAT": "R",
+				"TAC": "S",
+				"TAG": "T",
+				"TTA": "U",
+				"TTT": "V",
+				"TTC": "W",
+				"TTG": "X",
+				"TCA": "Y",
+				"TCT": "Z",
+				"TCC": "a",
+				"TCG": "b",
+				"TGA": "c",
+				"TGT": "d",
+				"TGC": "e",
+				"TGG": "f",
+				"CAA": "g",
+				"CAT": "h",
+				"CAC": "i",
+				"CAG": "j",
+				"CTA": "k",
+				"CTT": "l",
+				"CTC": "m",
+				"CTG": "n",
+				"CCA": "o",
+				"CCT": "p",
+				"CCC": "q",
+				"CCG": "r",
+				"CGA": "s",
+				"CGT": "t",
+				"CGC": "u",
+				"CGG": "v",
+				"GAA": "w",
+				"GAT": "x",
+				"GAC": "y",
+				"GAG": "z",
+				"GTA": "0",
+				"GTT": "1",
+				"GTC": "2",
+				"GTG": "3",
+				"GCA": "4",
+				"GCT": "5",
+				"GCC": "6",
+				"GCG": "7",
+				"GGA": "8",
+				"GGT": "9",
+				"GGC": "+",
+				"GGG": "/"
+			};
+
+			var codon = "";
+			var i = 0;
+			for (let letter of text) {
+				i++;
+				codon += letter;
+
+				if (i == 3) {
+					output += dict[codon];
+					i = 0;
+					codon = "";
+				}
+			}
+
+			console.log(output.length % 4);
+			var pad = "="
+			if (output.length % 4 != 0) {
+				output += pad.repeat(4 - output.length % 4);
+			}
+			console.log(output);
+
+			document.writeln("<h1>Confirmation Page</h1><br>");
+			document.writeln("Thank you for completing this form.<br><br>");
+			document.writeln("The text you wished to be encoded is " + text + "<br>");
+			document.writeln("The result is " + atob(output) + "<br>");
+		}
+	</script>
+</head>
+
 <body>
-
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
-
+	<p>Welcome to JavaScript</p>
+	<form><br>
+		Enter the text you wish encoded: <input type="text" id="encode_text" /><br><br>
+		<input type="submit" value="Submit" onclick="encode()" /><br>
+	</form>
+	<form><br>
+		Enter the text you wish decoded: <input type="text" id="text_to_decode" /><br><br>
+		<input type="submit" value="Submit" onclick="decode()" /><br>
+	</form>
 </body>
-</html> 
+
+</html>
