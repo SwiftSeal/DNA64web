@@ -78,11 +78,9 @@
 			for (let letter of encoded_text) {
 				out_text += dict[letter];
 			}
-			document.writeln("<h1>Confirmation Page</h1><br>");
-			document.writeln("Thank you for completing this form.<br><br>");
-			document.writeln("The text you wished to be encoded is " + encode_text + "<br>");
-			document.writeln("The result is " + btoa(encode_text) + "<br>");
-			document.writeln("DNA sequence is " + out_text + "<br>");
+			document.writeln("<h1>Result</h1><br>");
+			document.writeln("Original text: " + encode_text + "<br>");
+			document.writeln("DNA format:" + out_text + "<br>");
 		}
 		function decode() {
 			var text = document.getElementById("text_to_decode").value;
@@ -175,10 +173,9 @@
 			}
 			console.log(output);
 
-			document.writeln("<h1>Confirmation Page</h1><br>");
-			document.writeln("Thank you for completing this form.<br><br>");
-			document.writeln("The text you wished to be encoded is " + text + "<br>");
-			document.writeln("The result is " + atob(output) + "<br>");
+			document.writeln("<h1>Result</h1><br>");
+			document.writeln("Input DNA: " + text + "<br>");
+			document.writeln("Text Output: " + atob(output) + "<br>");
 		}
 	</script>
 </head>
