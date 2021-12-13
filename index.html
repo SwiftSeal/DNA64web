@@ -1,157 +1,181 @@
 <!DOCTYPE html>
+<meta charset="UTF-8">
+
 <html>
 
 <head>
-	<script>
-		function encode() {
-			var encode_text = document.getElementById("encode_text").value;
-			var out_text = ""
 
-			var dict = {
-				"A": "AAA",
-				"B": "AAT",
-				"C": "AAC",
-				"D": "AAG",
-				"E": "ATA",
-				"F": "ATT",
-				"G": "ATC",
-				"H": "ATG",
-				"I": "ACA",
-				"J": "ACT",
-				"K": "ACC",
-				"L": "ACG",
-				"M": "AGA",
-				"N": "AGT",
-				"O": "AGC",
-				"P": "AGG",
-				"Q": "TAA",
-				"R": "TAT",
-				"S": "TAC",
-				"T": "TAG",
-				"U": "TTA",
-				"V": "TTT",
-				"W": "TTC",
-				"X": "TTG",
-				"Y": "TCA",
-				"Z": "TCT",
-				"a": "TCC",
-				"b": "TCG",
-				"c": "TGA",
-				"d": "TGT",
-				"e": "TGC",
-				"f": "TGG",
-				"g": "CAA",
-				"h": "CAT",
-				"i": "CAC",
-				"j": "CAG",
-				"k": "CTA",
-				"l": "CTT",
-				"m": "CTC",
-				"n": "CTG",
-				"o": "CCA",
-				"p": "CCT",
-				"q": "CCC",
-				"r": "CCG",
-				"s": "CGA",
-				"t": "CGT",
-				"u": "CGC",
-				"v": "CGG",
-				"w": "GAA",
-				"x": "GAT",
-				"y": "GAC",
-				"z": "GAG",
-				"0": "GTA",
-				"1": "GTT",
-				"2": "GTC",
-				"3": "GTG",
-				"4": "GCA",
-				"5": "GCT",
-				"6": "GCC",
-				"7": "GCG",
-				"8": "GGA",
-				"9": "GGT",
-				"+": "GGC",
-				"/": "GGG",
-				"=": ""
-			};
-			var encoded_text = btoa(encode_text)
-			for (let letter of encoded_text) {
-				out_text += dict[letter];
+	<style>
+		.ascii-art {
+			font-family: monospace;
+			white-space: pre;
+		}
+
+		body {
+			text-align: center;
+			max-width: 500px;
+			margin: auto;
+			background-color: rgb(235, 227, 208);
+			font-family: Arial, Helvetica, sans-serif;
+			word-wrap: break-word;
+		}
+	</style>
+
+	<script>
+
+		var encode_dict = {
+			"A": "AAA",
+			"B": "AAT",
+			"C": "AAC",
+			"D": "AAG",
+			"E": "ATA",
+			"F": "ATT",
+			"G": "ATC",
+			"H": "ATG",
+			"I": "ACA",
+			"J": "ACT",
+			"K": "ACC",
+			"L": "ACG",
+			"M": "AGA",
+			"N": "AGT",
+			"O": "AGC",
+			"P": "AGG",
+			"Q": "TAA",
+			"R": "TAT",
+			"S": "TAC",
+			"T": "TAG",
+			"U": "TTA",
+			"V": "TTT",
+			"W": "TTC",
+			"X": "TTG",
+			"Y": "TCA",
+			"Z": "TCT",
+			"a": "TCC",
+			"b": "TCG",
+			"c": "TGA",
+			"d": "TGT",
+			"e": "TGC",
+			"f": "TGG",
+			"g": "CAA",
+			"h": "CAT",
+			"i": "CAC",
+			"j": "CAG",
+			"k": "CTA",
+			"l": "CTT",
+			"m": "CTC",
+			"n": "CTG",
+			"o": "CCA",
+			"p": "CCT",
+			"q": "CCC",
+			"r": "CCG",
+			"s": "CGA",
+			"t": "CGT",
+			"u": "CGC",
+			"v": "CGG",
+			"w": "GAA",
+			"x": "GAT",
+			"y": "GAC",
+			"z": "GAG",
+			"0": "GTA",
+			"1": "GTT",
+			"2": "GTC",
+			"3": "GTG",
+			"4": "GCA",
+			"5": "GCT",
+			"6": "GCC",
+			"7": "GCG",
+			"8": "GGA",
+			"9": "GGT",
+			"+": "GGC",
+			"/": "GGG",
+			"=": ""
+		};
+
+		var decode_dict = {
+			"AAA": "A",
+			"AAT": "B",
+			"AAC": "C",
+			"AAG": "D",
+			"ATA": "E",
+			"ATT": "F",
+			"ATC": "G",
+			"ATG": "H",
+			"ACA": "I",
+			"ACT": "J",
+			"ACC": "K",
+			"ACG": "L",
+			"AGA": "M",
+			"AGT": "N",
+			"AGC": "O",
+			"AGG": "P",
+			"TAA": "Q",
+			"TAT": "R",
+			"TAC": "S",
+			"TAG": "T",
+			"TTA": "U",
+			"TTT": "V",
+			"TTC": "W",
+			"TTG": "X",
+			"TCA": "Y",
+			"TCT": "Z",
+			"TCC": "a",
+			"TCG": "b",
+			"TGA": "c",
+			"TGT": "d",
+			"TGC": "e",
+			"TGG": "f",
+			"CAA": "g",
+			"CAT": "h",
+			"CAC": "i",
+			"CAG": "j",
+			"CTA": "k",
+			"CTT": "l",
+			"CTC": "m",
+			"CTG": "n",
+			"CCA": "o",
+			"CCT": "p",
+			"CCC": "q",
+			"CCG": "r",
+			"CGA": "s",
+			"CGT": "t",
+			"CGC": "u",
+			"CGG": "v",
+			"GAA": "w",
+			"GAT": "x",
+			"GAC": "y",
+			"GAG": "z",
+			"GTA": "0",
+			"GTT": "1",
+			"GTC": "2",
+			"GTG": "3",
+			"GCA": "4",
+			"GCT": "5",
+			"GCC": "6",
+			"GCG": "7",
+			"GGA": "8",
+			"GGT": "9",
+			"GGC": "+",
+			"GGG": "/"
+		};
+
+		function encode() {
+			var text_to_encode = document.getElementById("encode_text").value;
+			var output = "";
+			var base64 = btoa(text_to_encode);
+
+			for (let letter of base64) {
+				output += encode_dict[letter];
 			}
-			document.writeln("<h1>Result</h1><br>");
-			document.writeln("Original text: " + encode_text + "<br>");
-			document.writeln("DNA format:" + out_text + "<br>");
+
+			// document.writeln("<h1>Result</h1><br>");
+			// document.writeln("Original text: " + text_to_encode + "<br>");
+			// document.writeln("DNA format: " + output + "<br>");
+			document.getElementById("outputline").innerHTML = output;
+			return false;
 		}
 		function decode() {
 			var text = document.getElementById("text_to_decode").value;
-			var output = ""
-
-			var dict = {
-				"AAA": "A",
-				"AAT": "B",
-				"AAC": "C",
-				"AAG": "D",
-				"ATA": "E",
-				"ATT": "F",
-				"ATC": "G",
-				"ATG": "H",
-				"ACA": "I",
-				"ACT": "J",
-				"ACC": "K",
-				"ACG": "L",
-				"AGA": "M",
-				"AGT": "N",
-				"AGC": "O",
-				"AGG": "P",
-				"TAA": "Q",
-				"TAT": "R",
-				"TAC": "S",
-				"TAG": "T",
-				"TTA": "U",
-				"TTT": "V",
-				"TTC": "W",
-				"TTG": "X",
-				"TCA": "Y",
-				"TCT": "Z",
-				"TCC": "a",
-				"TCG": "b",
-				"TGA": "c",
-				"TGT": "d",
-				"TGC": "e",
-				"TGG": "f",
-				"CAA": "g",
-				"CAT": "h",
-				"CAC": "i",
-				"CAG": "j",
-				"CTA": "k",
-				"CTT": "l",
-				"CTC": "m",
-				"CTG": "n",
-				"CCA": "o",
-				"CCT": "p",
-				"CCC": "q",
-				"CCG": "r",
-				"CGA": "s",
-				"CGT": "t",
-				"CGC": "u",
-				"CGG": "v",
-				"GAA": "w",
-				"GAT": "x",
-				"GAC": "y",
-				"GAG": "z",
-				"GTA": "0",
-				"GTT": "1",
-				"GTC": "2",
-				"GTG": "3",
-				"GCA": "4",
-				"GCT": "5",
-				"GCC": "6",
-				"GCG": "7",
-				"GGA": "8",
-				"GGT": "9",
-				"GGC": "+",
-				"GGG": "/"
-			};
+			var output = "";
 
 			var codon = "";
 			var i = 0;
@@ -160,7 +184,7 @@
 				codon += letter;
 
 				if (i == 3) {
-					output += dict[codon];
+					output += decode_dict[codon];
 					i = 0;
 					codon = "";
 				}
@@ -173,25 +197,95 @@
 			}
 			console.log(output);
 
-			document.writeln("<h1>Result</h1><br>");
-			document.writeln("Input DNA: " + text + "<br>");
-			document.writeln("Text Output: " + atob(output) + "<br>");
+			//document.writeln("<h1>Result</h1><br>");
+			//document.writeln("Input DNA: " + text + "<br>");
+			//document.writeln("Text Output: " + atob(output) + "<br>");
+			document.getElementById("outputline_decode").innerHTML = atob(output);
+			return false;
 		}
 	</script>
 </head>
 
 <body>
-	<p>Welcome to my terrible website, enjoy ur stay</p>
+	<div class="ascii-art">
+_______  .__   __.      ___        __    _  _    
+|       \ |  \ |  |     /   \      / /   | || |   
+|  .--.  ||   \|  |    /  ^  \    / /_   | || |_  
+|  |  |  ||  . `  |   /  /_\  \  | '_ \  |__   _| 
+|  '--'  ||  |\   |  /  _____  \ | (_) |    | |   
+|_______/ |__| \__| /__/     \__\ \___/     |_|   
+	</div>
+
 	<form><br>
-		Enter the text you wish to encode (no breaking pls): <input type="text" id="encode_text" /><br><br>
-		<input type="submit" value="Submit" onclick="encode()" /><br>
-	</form>
-	<form><br>
-		Enter the DNA you wish to decode: <input type="text" id="text_to_decode" /><br><br>
-		<input type="submit" value="Submit" onclick="decode()" /><br>
+		Enter text to turn into DNA: <br>
+		<br>
+		<input type="text" id="encode_text"/><br>
+		<br>
+		<input type="submit" value="Submit" onclick="return encode()" /><br>
 	</form>
 
-	<img src="img/important.gif" alt="mooOOoo" width="20%">
+	<p id="outputline"></p>
+
+	<form><br>
+		Translate DNA to text: <br>
+		<br>
+		<input type="text" id="text_to_decode"/><br>
+		<br>
+		<input type="submit" value="Submit" onclick="return decode()" /><br>
+	</form>
+
+	<p id="outputline_decode"></p>
+	
+	<br>
+	<hr width="50%"> 
+
+	<p>
+		"What is this?"
+		<br><br>
+		<em>
+			DNA64 allows you to convert text into a DNA sequence.
+			It also allows you to translate this DNA back into text!
+			You could use this to send a secret message to your friend,
+			sign all of your plasmids with your name,
+			or genetically graffiti a pidgeon with your gang's favourite slogans.
+		</em>
+
+		<br><br>
+
+		"How does it work?"
+		<br><br>
+		<em>
+			DNA64 is based upon <a href="https://en.wikipedia.org/wiki/Base64">base64</a>, which is basically a way of representing data as 64 unique letters and symbols.
+			For example, the word "Cactus" is encoded as "Q2FjdHVz" in base64.
+			<br><br>
+			A sequence of DNA can be separated into triplets of bases, also known as "codons" (e.g., ATC, GCG, GGG).
+			Biologically, these codons are used to translate the genetic code into amino acids, in turn forming protein.
+			<br><br>
+			As DNA is comprised of four bases (A, T, C, and G) and there are three bases in each codon, we have 64 possible combinations in total! (4^3 = 64).
+			Therefore, we can simply replace the base64 encoding subunits with DNA triplets, and we now have a DNA sequence.
+
+		</em>
+
+		<br><br>
+		<hr width="50%"> 
+
+		<b>Reviews</b>
+
+		<br><br>
+
+		<em>
+			"What is the point in this?"
+			- Anonymous <br><br>
+			"Why though?"
+			- Anonymous <br><br>
+			"This is stupid."
+			- Anonymous <br><br>
+			"TTTATCTTTGACTGACTCCTTCACTCGATCTTACGC"
+			- Anonymous <br><br>
+		</em>
+	</p>
+
+	<img src="img/important.gif" alt="mooOOoo" width="100%">
 </body>
 
 </html>
